@@ -6,10 +6,10 @@ __pycache__/
 venv/
 .env/
 
-# Outputs
+# Outputs folder
 # outputs/
 
-# Dataset
+# Dataset folder
 # dataset/
 
 # Jupyter
