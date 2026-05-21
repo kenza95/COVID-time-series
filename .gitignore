@@ -10,7 +10,7 @@ venv/
 # outputs/
 
 # Dataset
-dataset/
+# dataset/
 
 # Jupyter
 .ipynb_checkpoints/
