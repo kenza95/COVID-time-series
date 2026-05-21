@@ -1,0 +1,55 @@
+Sectoral Value Added Forecasting (COVID Context — France)
+
+Overview
+This project studies and forecasts annual sectoral value added in France using Banque de France FIBEN firm-level data aggregated at the sector–year level, combined with INSEE sectoral value added.
+The objective is to estimate the historical relationship between Banque de France and INSEE series and use it to generate forecasts for the COVID period, using INSEE 2020 projections as an external input.
+
+Objective
+The analysis is structured in two steps:
+First, estimate the relationship between Banque de France and INSEE sectoral value added over 2003–2018.
+Second, use the estimated models to:
+- reconstruct Banque de France sectoral value added for 2019 (due to incomplete observations)
+- forecast 2020 values using INSEE sectoral projections
+
+Data
+The dataset comes from the Banque de France FIBEN database and is aggregated from firm-level observations into sector–year time series.
+It covers 2003–2018 for estimation purposes, while 2019 is excluded due to incomplete Banque de France reporting.
+Variables include year, sector, Banque de France sectoral value added, and INSEE sectoral value added.
+The analysis is conducted across the five French economic sectors: Agriculture, Industry, Construction, Market services, and Non-market services.
+
+Methodology
+Each sector is analysed separately using a consistent time series framework.
+All value added variables are expressed in logarithms. Lagged variables (one and two periods) are constructed for both Banque de France and INSEE series. Stationarity is assessed using the Augmented Dickey-Fuller test.
+
+Econometric specification
+Three nested ARDL-style models are estimated using OLS:
+Model 0 includes lagged Banque de France value added and contemporaneous INSEE value added.
+Model 1 adds the first lag of INSEE value added.
+Model 2 further adds the second lag of INSEE value added.
+
+Model selection
+Models are compared using the Akaike Information Criterion (AIC). The model with the lowest AIC is selected for forecasting in each sector.
+
+Forecasting objectives
+The selected model is used to generate:
+- a reconstruction of Banque de France sectoral value added for 2019
+- a forecast for 2020 using INSEE sectoral projections as an external shock
+
+Outputs
+For each sector, the script generates a PDF report structured as follows:
+Page 1 — Summary of results:
+ADF stationarity test, AIC-based model selection, and forecasts for 2019 and 2020.
+Pages 2–4 — Regression results:
+Full estimation output for the three models.
+Page 5 — Actual vs fitted values:
+Comparison between observed and fitted values of log(Banque de France sectoral value added) between 2003 and 2018.
+Page 6 — Forecasts:
+Extension of the series with forecasted values for 2019 and 2020.
+
+Execution
+python3 -m pip install numpy pandas matplotlib statsmodels
+python3 main.py
+
+Author
+Kenza Haouche
+Banque de France – May 2020
