@@ -50,6 +50,11 @@ Execution
 python3 -m pip install numpy pandas matplotlib statsmodels
 python3 main.py
 
+Disclaimer
+This project primarily focuses on Python scripting, data processing, visualization, and code robustness, rather than econometric interpretation of the results.
+In particular, some time series were found to be non-stationary, which limits the scope of formal inference. 
+This work forms part of a broader project comprising several stages; the present section is self-contained and can be read independently.
+
 Author
 Kenza Haouche
 Banque de France – May 2020
