@@ -10,8 +10,9 @@ venv/
 # Comment the line below if you DO want to track/commit outputs
 outputs/
 
-# Dataset folder 
-# dataset/ 
+# Dataset folder (usually not tracked)
+# Comment the line below if you DO want to track/commit dataset
+dataset/ 
 
 # Jupyter
 .ipynb_checkpoints/
