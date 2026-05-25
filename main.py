@@ -38,13 +38,13 @@ def format_pdf_page():
 
 # =================================================================================================================================================
 # LOAD AND CLEAN RAW DATA
-# If you are running the code from Git repo, skip and jump directly to row 97.
-# Paths are my local path as the raw dataset in available on my own computer, and too big to upload in Git. 
+# If you are running this code after cloning the Git repository, skip this section and start from row 97.
+# The paths below are local paths "/Users/kenzahaouche/COVID-time-series/".
+# The raw FIBEN dataset is stored on my machine and is too large to include in the Git repository.
 # =================================================================================================================================================
 
-# The firms dataset contains 5234974 rows and 26 columns.
+# The firms dataset contains 5234974 rows and 26 columns. This is a local path, skip and start from row 97 if you cloned the Git repository.
 FIBEN_dataset = pd.read_stata("/Users/kenzahaouche/COVID-time-series/FIBEN_2003_2019.dta")
-# This is my own local path as this dataset is too large to be stored in Git. You can skip this and go to row 97.
 print("Shape:", FIBEN_dataset.shape)
 print("Columns:", FIBEN_dataset.columns)
 print(FIBEN_dataset.head())
@@ -52,13 +52,14 @@ print(FIBEN_dataset.info())
 
 # We delete columns that are not needed for the analysis.  
 FIBEN_dataset = FIBEN_dataset.iloc[:, :7]
-FIBEN_dataset = FIBEN_dataset.drop(columns=["va_BdFn"]) # We drop value added at firm-level (va_BdFn), we keep the sectoral value added(sectoral_VA_BdF).
+# We drop value added at firm-level (va_BdFn), we keep the sectoral value added(sectoral_VA_BdF).
+FIBEN_dataset = FIBEN_dataset.drop(columns=["va_BdFn"]) 
 
-# We rename columns for clarity. 
+# We rename columns for clarity. INSEE sectoral value added was previously merged with the FIBEN dataset based on year and sector identifiers.
 FIBEN_dataset.columns = [
     "year", "sector", "nbr_firms", "sectoral_VA_BdF",
     "yearly_GDP_INSEE", "sectoral_VA_INSEE"
-] # INSEE sectoral value added was previously merged with the FIBEN dataset based on year and sector identifiers.
+] 
 print("Years:", FIBEN_dataset["year"].unique())
 print("Sectors:", FIBEN_dataset["sector"].unique())
 
@@ -90,16 +91,16 @@ FIBEN_dataset["sector"] = FIBEN_dataset["sector"].map(sector_map)
 # The BdF sectoral value added data for 2019, is incomplete (unreliable) as firms balance sheets were not yet all available at the time of analysis. We discard them and will instead forecast them later.
 FIBEN_dataset = FIBEN_dataset[FIBEN_dataset["year"] != 2019]
 
-# We copy the clean sector-year level data into CSV. We will use it for forecasting below.
-timeseries = FIBEN_dataset.to_csv("/Users/kenzahaouche/COVID-time-series/dataset/timeseries.csv", index=False) # This is my local path
+# We copy the clean sector-year level data into CSV. We will use it for forecasting below. The below indicates a local path. 
+timeseries = FIBEN_dataset.to_csv("/Users/kenzahaouche/COVID-time-series/dataset/timeseries.csv", index=False) 
 
 # =================================================================================================================================================
 # LOAD CLEAN DATA
 # If you are running it from Git repo, start here.
 # =================================================================================================================================================
 
-# Dataset is stored in dataset folder of the Git repo.
-timeseries = pd.read_csv("dataset/timeseries.csv")  # Run this if you are loading dataset from Git
+# Dataset is stored in dataset folder of the Git repo. Run this directly after cloning the repo.
+timeseries = pd.read_csv("dataset/timeseries.csv") 
 
 # =================================================================================================================================================
 # LOAD INSEE FORECASTS FOR 2020 (sectoral_VA_INSEE)
