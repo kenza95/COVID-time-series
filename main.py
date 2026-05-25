@@ -10,11 +10,11 @@
 # Banque de France (BdF) sectoral value added
 # INSEE sectoral value added
 
-# This relationship is then used to forecast BdF sectoral value added for 2020, a year for which BdF data is not unavailable yet but INSEE estimates exist.
+# This relationship is then used to forecast BdF sectoral value added for 2020, a year for which BdF data is not available yet but INSEE estimates exist.
 # We estimate separate time series regressions for each of the 5 economic sectors using the aggregated sectoral time series.
 # =================================================================================================================================================
 
-#First run this in zsh terminal: python3 -m pip install numpy pandas matplotlib statsmodels
+#To execute, run this in zsh terminal: python3 -m pip install numpy pandas matplotlib statsmodels
 #Then: python3 main.py         
 
 # IMPORTS
@@ -31,20 +31,20 @@ import os
 # =================================================================================================================================================
 
 def format_pdf_page():
-    """Creates a clean centered PDF page"""
+    """Creates a clean PDF page"""
     fig, ax = plt.subplots(figsize=(12, 8))
     ax.axis("off")
     return fig, ax
 
 # =================================================================================================================================================
 # LOAD AND CLEAN RAW DATA
-# If you are running it from Git repo, skip and jump directly to row 105.
-# Paths are my local path as the raw dataset in available on my computer, and too big to upload in Git. 
+# If you are running the code from Git repo, skip and jump directly to row 97.
+# Paths are my local path as the raw dataset in available on my own computer, and too big to upload in Git. 
 # =================================================================================================================================================
 
 # The firms dataset contains 5234974 rows and 26 columns.
 FIBEN_dataset = pd.read_stata("/Users/kenzahaouche/COVID-time-series/FIBEN_2003_2019.dta")
-# This is my own local path as this dataset is too large to be stored in Git. You can skip this and go to row 105.
+# This is my own local path as this dataset is too large to be stored in Git. You can skip this and go to row 97.
 print("Shape:", FIBEN_dataset.shape)
 print("Columns:", FIBEN_dataset.columns)
 print(FIBEN_dataset.head())
@@ -58,7 +58,7 @@ FIBEN_dataset = FIBEN_dataset.drop(columns=["va_BdFn"]) # We drop value added at
 FIBEN_dataset.columns = [
     "year", "sector", "nbr_firms", "sectoral_VA_BdF",
     "yearly_GDP_INSEE", "sectoral_VA_INSEE"
-]
+] # INSEE sectoral value added was previously merged with the FIBEN dataset based on year and sector identifiers.
 print("Years:", FIBEN_dataset["year"].unique())
 print("Sectors:", FIBEN_dataset["sector"].unique())
 
@@ -87,7 +87,7 @@ sector_map = {
 }
 FIBEN_dataset["sector"] = FIBEN_dataset["sector"].map(sector_map)
 
-# The BdF sectoral value added data for 2019, is incomplete (unreliable) as firms balance sheets were not yet all available at the time of analysis. We discard it and will also forecast them later instead.
+# The BdF sectoral value added data for 2019, is incomplete (unreliable) as firms balance sheets were not yet all available at the time of analysis. We discard them and will instead forecast them later.
 FIBEN_dataset = FIBEN_dataset[FIBEN_dataset["year"] != 2019]
 
 # We copy the clean sector-year level data into CSV. We will use it for forecasting below.
@@ -98,7 +98,7 @@ timeseries = FIBEN_dataset.to_csv("/Users/kenzahaouche/COVID-time-series/dataset
 # If you are running it from Git repo, start here.
 # =================================================================================================================================================
 
-# Dataset is stored in dataset folder of the repo.
+# Dataset is stored in dataset folder of the Git repo.
 timeseries = pd.read_csv("dataset/timeseries.csv")  # Run this if you are loading dataset from Git
 
 # =================================================================================================================================================
@@ -188,7 +188,7 @@ for sector_name in sectors:
     # and iv) plots of the fitted regression and the forecasted values.
     # =================================================================================================================================================
 
-    # We create a PDF report named after the sector and stored in outputs folder of the repo. 
+    # We create a PDF report named after the sector and stored in outputs folder of the Git repo. 
     pdf = PdfPages(f"outputs/Report_{sector_name}.pdf")
     
     # We create a separate cover page with sector name and main results.
@@ -247,7 +247,7 @@ Forecasted value for sectoral_VA_BdF 2020: {forecast_2020:.2f}
     pdf.savefig(fig)
     plt.close()
 
-    # On the same fit plot, we add the forecasted values for sectoral_VA_BdF for 2019 and 2020.
+    # On a similar fit plot, we add the forecasted values for sectoral_VA_BdF for 2019 and 2020.
     fig = plt.figure(figsize=(12, 6))
 
     plt.plot(model_data["year"], model_data["log_sectoral_VA_BdF"], label="Actual")
