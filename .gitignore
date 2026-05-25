@@ -6,11 +6,12 @@ __pycache__/
 venv/
 .env/
 
-# Outputs folder
-# outputs/
+# Outputs folder (files generated when running code, usually not tracked)
+# Comment the line below if you DO want to track/commit outputs
+outputs/
 
-# Dataset folder
-# dataset/
+# Dataset folder 
+# dataset/ 
 
 # Jupyter
 .ipynb_checkpoints/
