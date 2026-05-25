@@ -15,7 +15,7 @@ Data
 The .dta dataset is drawn from the Banque de France FIBEN database and aggregates firm-level observations into sector–year time series.
 It covers the period 2003–2018 for estimation purposes, with 2019 excluded due to incomplete reporting from the Banque de France.
 Variables include year, sector, Banque de France sectoral value added, and INSEE sectoral value added.
-The analysis is conducted across five French economic sectors: Agriculture, Industry, Construction, Market Services, and Non-Market Services.
+The analysis covers the five French economic sectors: Agriculture, Industry, Construction, Market Services, and Non-Market Services.
 
 Methodology
 Each sector is analysed separately within a consistent time-series framework.
@@ -40,7 +40,7 @@ For each sector, the script generates a PDF report structured as follows:
 Page 1 — Summary of results:
 ADF stationarity test, AIC-based model selection, and forecasts for 2019 and 2020.
 Pages 2–4 — Regression results:
-Full estimation outputs for the three models.
+Full estimation results for the three models.
 Page 5 — Actual vs fitted values:
 Comparison between observed and fitted values of log(Banque de France sectoral value added) between 2003 and 2018.
 Page 6 — Forecasts:
@@ -51,7 +51,7 @@ python3 -m pip install numpy pandas matplotlib statsmodels
 python3 main.py
 
 Disclaimer
-This project primarily focuses on Python scripting, data processing, visualization, and code robustness, rather than econometric interpretation of the results.
+This project primarily focuses on Python scripting, data processing, visualization, and code robustness, rather than econometric interpretation of results.
 In particular, some time series were found to be non-stationary, which limits the scope of formal inference. 
 This work forms part of a broader project comprising several stages; the present section is self-contained and can be read independently.
 
