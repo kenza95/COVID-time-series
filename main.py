@@ -36,14 +36,16 @@ def format_pdf_page():
     ax.axis("off")
     return fig, ax
 
+"""
 # =================================================================================================================================================
-# LOAD AND CLEAN RAW DATA
-# If you are running this code after cloning the Git repository, skip this section and start from row 97.
-# The paths below are local paths "/Users/kenzahaouche/COVID-time-series/".
-# The raw FIBEN dataset is stored on my machine and is too large to include in the Git repository.
+# LOAD AND CLEAN RAW DATA (LOCAL SETUP)
+# The raw FIBEN dataset is stored locally and is too large to include in the Git repository.
+# This section explains how the final "timeseries" dataset is constructed from raw data.
+# It is intended for local execution using absolute file paths.
+# If running from the Git repository, skip to the "LOAD CLEAN DATA" section below.
 # =================================================================================================================================================
 
-# The firms dataset contains 5234974 rows and 26 columns. This is a local path, skip and start from row 97 if you cloned the Git repository.
+# The firms dataset contains 5234974 rows and 26 columns.
 FIBEN_dataset = pd.read_stata("/Users/kenzahaouche/COVID-time-series/FIBEN_2003_2019.dta")
 print("Shape:", FIBEN_dataset.shape)
 print("Columns:", FIBEN_dataset.columns)
@@ -72,6 +74,11 @@ FIBEN_dataset = FIBEN_dataset.dropna(
     subset=["year", "sector", "sectoral_VA_BdF", "sectoral_VA_INSEE"]
 )
 
+# We check there are no non-positive values in the variables that will be log-transformed
+print("Check for non-positive values (<= 0) before log transformation:\n")
+print("sectoral_VA_BdF:", (FIBEN_dataset["sectoral_VA_BdF"] <= 0).sum())
+print("sectoral_VA_INSEE:", (FIBEN_dataset["sectoral_VA_INSEE"] <= 0).sum())
+
 # We attribute correct formats to the columns that will be used in the time series models.
 FIBEN_dataset["year"] = pd.to_datetime(FIBEN_dataset["year"]).dt.year
 FIBEN_dataset["sectoral_VA_BdF"] = pd.to_numeric(FIBEN_dataset["sectoral_VA_BdF"], errors="coerce")
@@ -91,8 +98,9 @@ FIBEN_dataset["sector"] = FIBEN_dataset["sector"].map(sector_map)
 # The BdF sectoral value added data for 2019, is incomplete (unreliable) as firms balance sheets were not yet all available at the time of analysis. We discard them and will instead forecast them later.
 FIBEN_dataset = FIBEN_dataset[FIBEN_dataset["year"] != 2019]
 
-# We copy the clean sector-year level data into CSV. We will use it for forecasting below. The below indicates a local path. 
+# We export the clean sector-year level data into CSV. We will use it for forecasting below.
 timeseries = FIBEN_dataset.to_csv("/Users/kenzahaouche/COVID-time-series/dataset/timeseries.csv", index=False) 
+"""
 
 # =================================================================================================================================================
 # LOAD CLEAN DATA
