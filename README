@@ -1,7 +1,7 @@
 Sectoral Value Added Forecasting (COVID Context — France)
 
 Overview
-This project studies and forecasts annual sectoral value added in France using Banque de France FIBEN firm-level data aggregated at the sector–year level, combined with sectoral value added data from INSEE i.e. France sectoral GDP.
+This project studies and forecasts annual sectoral value added in France using Banque de France FIBEN firm-level data aggregated at the sector–year level, combined with sectoral value added data from INSEE (France’s national statistics institute).
 The objective is to estimate the historical relationship between Banque de France and INSEE series and use it to generate forecasts for the COVID period, relying on INSEE 2020 projections as an external shock.
 
 Objective
@@ -12,7 +12,7 @@ Second, use the estimated models to:
 - forecast 2020 values using INSEE sectoral projections published at the time of analysis.
 
 Data
-The .dta dataset is drawn from the Banque de France FIBEN database and aggregates firm-level observations into sector–year time series.
+The .dta dataset is drawn from the Banque de France FIBEN database and is aggregated from firm-level observations into sector–year time series.
 It covers the period 2003–2018 for estimation purposes, with 2019 excluded due to incomplete reporting from the Banque de France.
 Variables include year, sector, Banque de France sectoral value added, and INSEE sectoral value added.
 The analysis covers the five French economic sectors: Agriculture, Industry, Construction, Market Services, and Non-Market Services.
