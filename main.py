@@ -14,8 +14,8 @@
 # We estimate separate time series regressions for each of the 5 economic sectors using the aggregated sectoral time series.
 # =================================================================================================================================================
 
-#To execute, run this in zsh terminal: python3 -m pip install numpy pandas matplotlib statsmodels
-#Then: python3 main.py         
+#To execute, first install dependencies with: python -m pip install -r requirements.txt
+#Then run the program with: python main.py         
 
 # IMPORTS
 import numpy as np
@@ -24,7 +24,6 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import statsmodels.formula.api as smf
 from statsmodels.tsa.stattools import adfuller
-import os
 
 # =================================================================================================================================================
 # PDF FORMATTING FUNCTION FOR PRODUCING FINAL OUTPUTS AS PDF REPORTS PER SECTOR
@@ -40,9 +39,9 @@ def format_pdf_page():
 # =================================================================================================================================================
 # LOAD AND CLEAN RAW DATA (LOCAL SETUP)
 # The raw FIBEN dataset is stored locally and is too large to include in the Git repository.
-# This section explains how the final "timeseries" dataset is constructed from raw data.
-# It is intended for local execution using absolute file paths.
-# If running from the Git repository, skip to the "LOAD CLEAN DATA" section below.
+# This section explains how the final "timeseries" dataset - available in the Git repo - is constructed from raw data.
+# This section is intended for local execution using absolute file paths.
+# If running from the Git repository, skip to the "LOAD CLEAN DATA" section below (row 105).
 # =================================================================================================================================================
 
 # The firms dataset contains 5234974 rows and 26 columns.
@@ -107,7 +106,7 @@ timeseries = FIBEN_dataset.to_csv("/Users/kenzahaouche/COVID-time-series/dataset
 # If you are running it from Git repo, start here.
 # =================================================================================================================================================
 
-# Dataset is stored in dataset folder of the Git repo. Run this directly after cloning the repo.
+# The dataset is stored in the "dataset" folder of the Git repo. Run this after cloning the repo.
 timeseries = pd.read_csv("dataset/timeseries.csv") 
 
 # =================================================================================================================================================
@@ -197,7 +196,7 @@ for sector_name in sectors:
     # and iv) plots of the fitted regression and the forecasted values.
     # =================================================================================================================================================
 
-    # We create a PDF report named after the sector and stored in outputs folder of the Git repo. 
+    # We create a PDF report named after the sector and stored in the "outputs" folder of the Git repo. 
     pdf = PdfPages(f"outputs/Report_{sector_name}.pdf")
     
     # We create a separate cover page with sector name and main results.
